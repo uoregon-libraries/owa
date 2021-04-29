@@ -1,0 +1,14 @@
+version: "2.4"
+services:
+  web:
+    # Choose the port you want exposed
+    ports:
+      - 8080:80
+
+    # Uncomment these volume mounts if you need to work on the dev setup, but
+    # these are unnecessary for production and for security shouldn't be
+    # mounted in.
+    #volumes:
+    #  - ./docker/owa-config.php:/var/www/html/owa-config.php
+    #  - ./docker/bin/docker-entrypoint.sh:/docker-entrypoint.sh
+    #  - ./docker/httpd-init:/docker-entrypoint

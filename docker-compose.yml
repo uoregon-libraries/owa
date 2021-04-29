@@ -1,0 +1,33 @@
+version: "2.4"
+
+services:
+  db:
+    image: mariadb:10
+    environment:
+      MYSQL_DATABASE: owa
+      MYSQL_USER: owa
+      MYSQL_PASSWORD: ${OWA_DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+    volumes:
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+      - db:/var/lib/mysql
+  web:
+    build: .
+    volumes:
+      - data:/var/www/html/owa-data
+    depends_on:
+      - db
+    environment:
+      OWA_DB_NAME: owa
+      OWA_DB_USER: owa
+      OWA_DB_PASSWORD: ${OWA_DB_PASSWORD}
+      OWA_NONCE_KEY:
+      OWA_NONCE_SALT:
+      OWA_AUTH_KEY:
+      OWA_AUTH_SALT:
+      OWA_PUBLIC_URL:
+
+volumes:
+  db:
+  data:

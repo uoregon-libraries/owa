@@ -1,0 +1,6 @@
+OWA_DB_PASSWORD=changeme
+OWA_NONCE_KEY=changeme
+OWA_NONCE_SALT=changeme
+OWA_AUTH_KEY=changeme
+OWA_AUTH_SALT=changeme
+OWA_PUBLIC_URL=https://foo.bar.com/owa/
