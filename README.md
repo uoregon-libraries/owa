@@ -11,10 +11,15 @@ This project aims to set up a useful OWA service for UO.
 2. Copy `env-example` to `.env` in order to set up the OWA database password,
    choose random values for the keys and salts the application uses, and set
    the public URL.
+   - **Whenever you change the port in your docker compose override, you need
+     to change the "public URL" in `.env`**
 3. If desired, copy `docker/owa.sql` into `docker/mysql-init` to skip some of
    the web-wizard setup.  This will create the database structure as well as
    install an administrative user.  You will be able to log in as "adm" with
    the password "adm".  You **must** change this for production.
+4. The project states it cannot be used from localhost or a raw IP address.
+   This makes testing a pain.  You'll want to stand this up on a server that
+   has a hostname if you want to do any kind of testing.
 
 If for some reason you override the db name or user in the `db` container, make
 sure you apply the same override(s) to the `web` container.
