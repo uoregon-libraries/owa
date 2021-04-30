@@ -45,6 +45,14 @@ doing so.**
 4. Enable the server for public access.  Do not do this before step 3.  You do
    not want somebody accidentally hitting the setup pages and hijacking the
    server, even if it's nothing more than a minor annoyance.
+5. Stop the containers, remove them (`docker-compose down` will do this), and
+   then restart them.
+   - `/var/www/html/install.php` is not part of our docker image - the setup
+     scripts only copy it there if it's needed.  Container removal kills that
+     file and then the next time you start the server, it won't be copied in
+     again since the setup has been completed.
+   - Without this magic, anybody can do all kinds of awful stuff:
+     https://github.com/Open-Web-Analytics/Open-Web-Analytics/issues/735
 
 An easy way to generate random text for passwords/keys/salts:
 
