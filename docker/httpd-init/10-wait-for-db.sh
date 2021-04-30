@@ -2,7 +2,7 @@
 MAX_TRIES=15
 TRIES=0
 while true; do
-  mysql -u$OWA_DB_USER -hdb -p$OWA_DB_PASSWORD -e "ALTER DATABASE $OWA_DB_NAME charset=utf8"
+  mysqladmin status -hdb -u$OWA_DB_USER -p$OWA_DB_PASSWORD
   st=$?
   if [[ $st == 0 ]]; then
     break
