@@ -67,3 +67,51 @@ cat /dev/urandom | tr -dc 'a-zA-Z0-9_-' | fold -w 30 | head -n 1
 
 Change the allowed `tr` list as needed, change the fold width as needed, change
 the `head` number to generate more passwords at once, etc.
+
+## Tracking Codes
+
+So here's a fun thing: the tracking code JS snippet provided by OWA... doesn't
+actually work all the time.  One problem is that `owa.tracker-combined-min.js`
+is explicitly blocked by some ad blockers.  We could potentially rename it to
+try and get around that, because this is (a) not ad-related, and (b) something
+we're using to *improve* privacy while still figuring out how our sites are
+used.
+
+But beyond that, something in certain plugins can actually *silently* prevent
+the JS from pulling in `log.php`.  I still haven't tracked this down.  With
+tracking protection off, and uBlock disabled, I get the JS but not the requests
+to `log.php`.  I only managed to get this to work by using a completely
+plugin-free Firefox.
+
+But here's what's weird: if you use the "traditional" style of JS injection, it
+works.  I do not know why.  The new, recommended "async" method doesn't work.
+Both methods pull down the JS just fine, but only the "traditional" method gets
+events sent to `log.php`.
+
+Unfortunately OWA doesn't give you the option to choose the traditional
+snippet.  It only shows you the async snippet, so if we want the traditional
+snippet, we have to build it manually.  And the example in their wiki... is
+broken.
+
+So this is what we could choose to use if we're okay with monkeying around with
+the code each time, rather than having a nice copy-paste approach:
+
+```html
+<script src='https://<OWA Hostname>/modules/base/js/owa.tracker-combined-min.js'
+        type='text/javascript'></script>
+
+<script type="text/javascript">
+//<![CDATA[
+try {
+  OWA.setSetting('baseUrl',  "https://<OWA Hostname>/");
+  OWATracker = new OWA.tracker();
+  OWATracker.setSiteId('<OWA Site ID>');
+  OWATracker.trackPageView();
+  OWATracker.trackClicks();
+  OWATracker.trackDomStream();
+} catch(err) {}
+//]]>
+</script>
+```
+
+The `<OWA ...>` bits obviously have to be replaced by the correct values.
