@@ -9,6 +9,5 @@ services:
     # these are unnecessary for production and for security shouldn't be
     # mounted in.
     #volumes:
-    #  - ./docker/owa-config.php:/var/www/html/owa-config.php
     #  - ./docker/bin/docker-entrypoint.sh:/docker-entrypoint.sh
     #  - ./docker/httpd-init:/docker-entrypoint

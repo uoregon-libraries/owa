@@ -15,7 +15,7 @@ services:
   web:
     build: .
     volumes:
-      - data:/var/www/html/owa-data
+      - data:/var/www/html
     depends_on:
       - db
     environment:
