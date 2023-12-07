@@ -1,4 +1,4 @@
-FROM php:8-apache
+FROM php:7-apache
 
 # Basic PHP setup
 RUN apt-get update -y && apt-get upgrade -y
