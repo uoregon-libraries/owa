@@ -1,9 +1,9 @@
-FROM php:7.4-apache
+FROM php:8-apache
 
 # Basic PHP setup
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y \
-    mariadb-client-10.3
+    mariadb-client
 RUN docker-php-ext-install \
     mysqli \
     pdo \
@@ -20,7 +20,7 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN sed -i "s/memory_limit\s*=/memory_limit = 1024M/g"  "$PHP_INI_DIR/php.ini"
 
 # "Install" OWA and set up permissions
-RUN curl -L https://github.com/Open-Web-Analytics/Open-Web-Analytics/releases/download/1.7.3/owa_1.7.3_packaged.tar | tar -x
+RUN curl -L https://github.com/Open-Web-Analytics/Open-Web-Analytics/releases/download/1.7.8/owa_1.7.8_packaged.tar | tar -x
 RUN chgrp -R www-data /var/www/html
 RUN find /var/www/html -type f -exec chmod 640 {} \;
 RUN find /var/www/html -type d -exec chmod 750 {} \;
