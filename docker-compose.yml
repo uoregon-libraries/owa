@@ -30,4 +30,6 @@ services:
 
 volumes:
   db:
+    name: owa_db
   data:
+    name: owa_data
