@@ -1,5 +1,8 @@
 FROM php:7-apache
 
+# From https://github.com/Open-Web-Analytics/Open-Web-Analytics/releases/
+ARG OWA_RELEASE_URL=https://github.com/Open-Web-Analytics/Open-Web-Analytics/releases/download/1.7.8/owa_1.7.8_packaged.tar
+
 # Basic PHP setup
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y \
@@ -20,7 +23,7 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN sed -i "s/memory_limit\s*=/memory_limit = 1024M/g"  "$PHP_INI_DIR/php.ini"
 
 # "Install" OWA and set up permissions
-RUN curl -L https://github.com/Open-Web-Analytics/Open-Web-Analytics/releases/download/1.7.8/owa_1.7.8_packaged.tar | tar -x
+RUN curl -L ${OWA_RELEASE_URL} | tar -x
 RUN chgrp -R www-data /var/www/html
 RUN find /var/www/html -type f -exec chmod 640 {} \;
 RUN find /var/www/html -type d -exec chmod 750 {} \;
