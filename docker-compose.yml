@@ -2,7 +2,7 @@ version: "2.4"
 
 services:
   db:
-    image: mariadb:10
+    image: docker.io/mariadb:11
     environment:
       - MYSQL_DATABASE=owa
       - MYSQL_USER=owa
@@ -30,4 +30,6 @@ services:
 
 volumes:
   db:
+    name: owa_db
   data:
+    name: owa_data
